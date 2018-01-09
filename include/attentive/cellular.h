@@ -25,8 +25,8 @@
 #endif
 
 #define CELLULAR_IMEI_LENGTH 15
-#define CELLULAR_MEID_LENGTH 14
-#define CELLULAR_ICCID_LENGTH 19
+#define CELLULAR_MEID_LENGTH 15
+#define CELLULAR_ICCID_LENGTH 20
 #define CELLULAR_IMSI_LENGTH 15
 #define CELLULAR_MAC_LENGTH 17
 #define CELLULAR_NUM_LENGTH 19
@@ -52,6 +52,7 @@ struct cellular {
 };
 
 struct cellular_ops {
+    int (*reset)(struct cellular *modem);
     int (*attach)(struct cellular *modem);
     int (*detach)(struct cellular *modem);
     int (*pdp_open)(struct cellular *modem, const char *apn);
@@ -154,6 +155,9 @@ void cellular_sara_free(struct cellular *modem);
 
 struct cellular *cellular_sim800_alloc(void);
 void cellular_sim800_free(struct cellular *modem);
+
+struct cellular *cellular_nb501_alloc(void);
+void cellular_nb501_free(struct cellular *modem);
 
 int cellular_sim800_bt_mac(struct cellular *modem, char* buf, int len);
 int cellular_sim800_bt_enable(struct cellular *modem);
